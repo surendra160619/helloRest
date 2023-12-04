@@ -1,0 +1,7 @@
+server:
+    port: 9090
+spring:
+    datasource:
+        password: DeVPsNRW602#
+        url: jdbc:oracle:thin:@10.70.236.206:1521/pension.sdc.raj.in
+        username: PSN_RW
