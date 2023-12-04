@@ -1,25 +1,18 @@
-pipeline {
-    agent any
-        tools {
-        maven 'maven3'
-    }
-    stages {
-        stage('Clone sources') {
-            steps {
-                git 'https://github.com/surendra160619/helloRest.git'
-            }
-        }
+node {
+  stage("Clone the project") {
+    git branch: 'main', url: 'https://github.com/surendra160619/helloRest.git'
+  }
 
-        stage('Build') {
-            steps {
-                 sh "mvn package"
-            }
-        }
-  
-   stage('test') {
-            steps {
-                echo "test"
-            }
-        }
+  stage("Compilation") {
+    sh "./mvnw clean install -DskipTests"
+  }
+
+  stage("Tests and Deployment") {
+    stage("Runing unit tests") {
+      sh "./mvnw test -Punit"
     }
+    stage("Deployment") {
+      sh 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
+    }
+  }
 }
