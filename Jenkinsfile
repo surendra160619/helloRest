@@ -3,6 +3,10 @@ pipeline {
     environment {
 		mavenHome = tool 'jankins-maven'
 	}
+	
+	tools {
+		jdk 'java-17'
+	}
     stages {
         stage('Build') { 
             steps {
