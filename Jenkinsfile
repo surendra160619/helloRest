@@ -5,7 +5,7 @@ pipeline {
 	}
 	
 	tools {
-		jdk 'java-17'
+		jdk 'JAVA_HOME'
 	}
     stages {
         stage('Build') { 
