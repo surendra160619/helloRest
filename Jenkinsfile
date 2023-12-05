@@ -10,12 +10,12 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh 'mvn clean compile'
+               sh 'mvn clean install -DskipTests'
             }
         }
         stage('Test') { 
             steps {
-                echo "Testing" 
+               sh 'mvn test --fail-never'
             }
         }
         stage('Deploy') { 
