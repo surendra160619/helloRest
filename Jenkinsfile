@@ -1,18 +1,32 @@
-node {
-  stage("Clone the project") {
-    git branch: 'main', url: 'https://github.com/surendra160619/helloRest.git'
-  }
+pipeline {
+	agent any
 
-  stage("Compilation") {
-    sh "./mvnw clean install -DskipTests"
-  }
+	environment {
+		mavenHome = tool 'MAVEN_HOME'
+	}
 
-  stage("Tests and Deployment") {
-    stage("Runing unit tests") {
-      sh "./mvnw test -Punit"
-    }
-    stage("Deployment") {
-      sh 'nohup ./mvnw spring-boot:run -Dserver.port=8001 &'
-    }
-  }
+	tools {
+		jdk 'JAVA_HOME'
+	}
+
+	stages {
+
+		stage('Build'){
+			steps {
+				bat "mvn clean install -DskipTests"
+			}
+		}
+
+		stage('Test'){
+			steps{
+				bat "mvn test"
+			}
+		}
+
+		stage('Deploy') {
+			steps {
+			    bat "mvn jar:jar deploy:deploy"
+			}
+		}
+	}
 }
